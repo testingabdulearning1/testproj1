@@ -24,4 +24,6 @@ func ImportEnv() {
 			log.Panicln(fmt.Errorf("fatal error config file: %s", err))
 		}
 	}
+
+	log.Println("Import env is success")
 }
