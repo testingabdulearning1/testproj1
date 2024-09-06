@@ -1,8 +1,9 @@
-package config
+package db
 
 import (
 	"fmt"
 	cfg "school-management-app/common/config"
+	"school-management-app/src/accounts/config"
 	"school-management-app/src/accounts/domain/entities/models"
 
 	"gorm.io/gorm"
@@ -19,7 +20,7 @@ func GetSchoolDB(schoolPrefix string) (*gorm.DB, error) {
 		return db, nil
 	}
 	db, err := cfg.ConnectAndGetDB(cfg.Postgresdb{
-		PostgresConn: PostgresConn,
+		PostgresConn: config.PostgresConn,
 		DbName:       schoolPrefix + DbSuffix,
 	})
 	if err != nil {
@@ -32,7 +33,7 @@ func GetSchoolDB(schoolPrefix string) (*gorm.DB, error) {
 
 func CreateNewSchool(schoolPrefix string) error {
 	db, err := cfg.CreateNewDB(cfg.Postgresdb{
-		PostgresConn: PostgresConn,
+		PostgresConn: config.PostgresConn,
 		DbName:       schoolPrefix + DbSuffix,
 	})
 	if err != nil {

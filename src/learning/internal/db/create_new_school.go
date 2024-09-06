@@ -1,15 +1,18 @@
-package config
+package db
 
 import (
 	"fmt"
 	cfg "school-management-app/common/config"
 	"school-management-app/src/attendance/domain/entities/models"
+	config "school-management-app/src/learning/config"
 
 	"gorm.io/gorm"
 )
 
+// This function is to be called when a new school is created, to create the learning tables for the school
+
 const (
-	DbSuffix = "_attendance"
+	DbSuffix = "_learning"
 )
 
 var SchoolDBs map[string]*gorm.DB = make(map[string]*gorm.DB)
@@ -19,7 +22,7 @@ func GetSchoolDB(schoolPrefix string) (*gorm.DB, error) {
 		return db, nil
 	}
 	db, err := cfg.ConnectAndGetDB(cfg.Postgresdb{
-		PostgresConn: PostgresConn,
+		PostgresConn: config.PostgresConn,
 		DbName:       schoolPrefix + DbSuffix,
 	})
 	if err != nil {
@@ -32,7 +35,7 @@ func GetSchoolDB(schoolPrefix string) (*gorm.DB, error) {
 
 func CreateNewSchool(schoolPrefix string) error {
 	db, err := cfg.CreateNewDB(cfg.Postgresdb{
-		PostgresConn: PostgresConn,
+		PostgresConn: config.PostgresConn,
 		DbName:       schoolPrefix + DbSuffix,
 	})
 	if err != nil {
