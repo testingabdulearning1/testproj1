@@ -2,16 +2,14 @@ WORK_DIR = $(shell pwd)
 
 PROJECT := Infozio backend
 
-default: run
+accounts:
+	go run src/accounts/cmd/main.go
 
-run:
-	go run main.go
+attendance:
+	go run src/attendance/cmd/main.go
 
-user:
-	SERVER_TYPE=user PORT=5000 go run main.go
+exam:
+	go run src/exam/cmd/main.go
 
-admin:
-	SERVER_TYPE=admin PORT=5000 go run main.go
-
-quiz:
-	SERVER_TYPE=quiz PORT=5000 go run main.go
+learning:
+	go run src/learning/cmd/main.go

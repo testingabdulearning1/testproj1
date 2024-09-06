@@ -20,8 +20,8 @@ func init() {
 }
 
 func loadConfig() {
-	viper.SetConfigName("config")
-	viper.AddConfigPath("./internal/config")
+	viper.SetConfigName("learning")
+	viper.AddConfigPath("./config")
 	viper.SetConfigType("env")
 	viper.AutomaticEnv()
 
@@ -41,7 +41,7 @@ func loadConfig() {
 	}
 
 	//get value for public db
-	PostgresPublicDbName = viper.GetString("POSTGRES_PUBLIC_DB_NAME")
+	PostgresPublicDbName = viper.GetString("PUBLIC_DB_NAME")
 	if PostgresPublicDbName == "" {
 		log.Fatalln("error occured while writing env values onto variables, error: POSTGRES_PUBLIC_DB_NAME is empty")
 	}
