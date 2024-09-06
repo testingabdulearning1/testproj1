@@ -27,7 +27,6 @@ var PostgresPublicDbName string
 
 func init() {
 	loadConfig()
-	initPublicDB()
 }
 
 func loadConfig() {

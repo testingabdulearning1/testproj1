@@ -1,27 +1,28 @@
-package config
+package db
 
 import (
 	"fmt"
 	"log"
 	cfg "school-management-app/common/config"
+	config "school-management-app/src/learning/config"
 	"school-management-app/src/learning/domain/entities/models"
 
 	"gorm.io/gorm"
 )
 
-var PublicDB *gorm.DB
+var PublicDB *gorm.DB = initPublicDB()
 
-func initPublicDB() { //is called in init function in env.go
+func initPublicDB() *gorm.DB { //is called in init function in env.go
 	db, err := cfg.ConnectToDB(cfg.Postgresdb{
-		PostgresConn: PostgresConn,
-		DbName:       PostgresPublicDbName,
+		PostgresConn: config.PostgresConn,
+		DbName:       config.PostgresPublicDbName,
 	})
 
 	if err != nil {
 		log.Fatal("Couldn't connect to the database. Error:", err)
 	}
 	migratePublicTables(db)
-	PublicDB = db
+	return db
 }
 
 func migratePublicTables(db *gorm.DB) {
@@ -42,7 +43,7 @@ func migratePublicTables(db *gorm.DB) {
 
 	if err := db.AutoMigrate(&models.Books{}); err != nil {
 		log.Fatalln("Couldn't migrate models.Books. Error:", err)
-		return 
+		return
 	}
 
 	fmt.Println("Migrated tables successfully")
