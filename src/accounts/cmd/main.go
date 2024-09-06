@@ -1,4 +1,4 @@
-package cmd
+package main
 
 import (
 	"fmt"
@@ -16,7 +16,7 @@ func healthCheck(c *fiber.Ctx) error {
 	})
 }
 
-func RunAccountsServer() {
+func main() {
 	app := fiber.New(fiber.Config{
 		AppName:       "Infozio accounts app",
 		StrictRouting: true,
@@ -26,7 +26,6 @@ func RunAccountsServer() {
 	// health check
 	app.Get("/health", healthCheck)
 	route.MountRoutes(app)
-
 
 	err := app.Listen(fmt.Sprintf(":%s", config.Env.Port))
 	if err != nil {

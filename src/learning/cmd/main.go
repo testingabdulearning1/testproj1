@@ -1,4 +1,4 @@
-package cmd
+package main
 
 import (
 	"fmt"
@@ -15,7 +15,7 @@ func healthCheck(c *fiber.Ctx) error {
 	})
 }
 
-func RunexamServer() {
+func main() {
 	app := fiber.New(fiber.Config{
 		AppName:       "Infozio exam app",
 		StrictRouting: true,
