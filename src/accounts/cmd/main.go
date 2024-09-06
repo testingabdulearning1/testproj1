@@ -2,7 +2,8 @@ package cmd
 
 import (
 	"fmt"
-	"school-management-app/common/config"
+
+	"school-management-app/src/accounts/config"
 	route "school-management-app/src/accounts/internal/routes"
 
 	"github.com/gofiber/fiber/v2"
@@ -27,7 +28,7 @@ func RunAccountsServer() {
 	route.MountRoutes(app)
 
 
-	err := app.Listen(fmt.Sprintf(":%s", config.AccountConfig.Port))
+	err := app.Listen(fmt.Sprintf(":%s", config.Env.Port))
 	if err != nil {
 		panic(err)
 	}

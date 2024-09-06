@@ -2,7 +2,7 @@ package cmd
 
 import (
 	"fmt"
-	"school-management-app/common/config"
+	"school-management-app/src/exam/config"
 	route "school-management-app/src/exam/internal/routes"
 
 	"github.com/gofiber/fiber/v2"
@@ -26,7 +26,7 @@ func RunexamServer() {
 	app.Get("/health", healthCheck)
 	route.MountRoutes(app)
 
-	err := app.Listen(fmt.Sprintf(":%s", config.AccountConfig.Port))
+	err := app.Listen(fmt.Sprintf(":%s", config.Env.Port))
 	if err != nil {
 		panic(err)
 	}

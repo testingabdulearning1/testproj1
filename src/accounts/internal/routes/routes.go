@@ -8,7 +8,7 @@ import (
 )
 
 func MountRoutes(app *fiber.App) {
-	handlers := di.GetHandlers(config.DB)
+	handlers := di.GetHandlers(config.PublicDB)
 	apiGroup := app.Group("/api")
 
 	MountStudentAuth(apiGroup.Group("/student"), handlers)
