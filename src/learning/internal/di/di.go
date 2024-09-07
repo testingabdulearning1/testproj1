@@ -1,18 +1,25 @@
 package di
 
+import (
+	usecases "school-management-app/src/learning/internal/usecases/curriculum"
+	handlers "school-management-app/src/learning/internal/handlers/curriculum"
+	"school-management-app/src/learning/internal/repositories"
+
+	"gorm.io/gorm"
+)
+
 //dependency injection
 
 type Handlers struct {
-	// ABC *handlers.UserHandler
+	CurriculumHandler handlers.CurriculumHandler
 }
 
-func GetHandlers(db interface{}) *Handlers { //replace interface{} with db type
-
-	// abcRepo := repositories.NewUserRepo(config.Db)
-	// abcUseCase := usecases.NewUserUseCase(abcRepo)
-	// abcHandler := handlers.NewUserHandler(abcUseCase)
+func GetHandlers(db *gorm.DB) *Handlers {
+	curriculumRepo := repositories.NewCurriculumRepo(db)
+	curriculumUseCase := usecases.NewCurriculumUseCase(curriculumRepo)
+	curriculumHandler := handlers.NewCurriculumHandler(curriculumUseCase)
 
 	return &Handlers{
-		// ABC: abcHandler,
+		CurriculumHandler: curriculumHandler,
 	}
 }
