@@ -1,12 +1,14 @@
 package di
 
+import "gorm.io/gorm"
+
 //dependency injection
 
 type Handlers struct {
 	// ABC *handlers.UserHandler
 }
 
-func GetHandlers(db interface{}) *Handlers { //replace interface{} with db type
+func GetHandlers(db *gorm.DB) *Handlers { //replace interface{} with db type
 
 	// abcRepo := repositories.NewUserRepo(config.Db)
 	// abcUseCase := usecases.NewUserUseCase(abcRepo)
