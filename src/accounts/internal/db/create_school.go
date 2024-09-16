@@ -67,7 +67,7 @@ func migrateSchoolAccountsTables(db *gorm.DB) error {
 		return err
 	}
 
-	if err := db.AutoMigrate(&models.Parent{}); err != nil {
+	if err := db.AutoMigrate(&models.ParentInfo{}); err != nil {
 		fmt.Println("Couldn't migrate models.Parent. Error:", err)
 		return err
 	}
