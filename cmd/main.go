@@ -2,8 +2,8 @@ package main
 
 import (
 	"fmt"
+	route "school-management-app/pkg/api/routes"
 	"school-management-app/pkg/config"
-	route "school-management-app/pkg/routes"
 
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/logger"
