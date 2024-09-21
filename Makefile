@@ -15,4 +15,4 @@ learning:
 	go run src/learning/cmd/main.go
 
 running:
-	CompileDaemon -build="go build -o ./common/cmd/main ./common/cmd" -command=./common/cmd/main
+	CompileDaemon -build="go build -o ./cmd/main ./cmd" -command=./cmd/main
