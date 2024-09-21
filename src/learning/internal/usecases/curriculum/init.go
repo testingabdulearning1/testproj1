@@ -10,7 +10,7 @@ type CurriculumUseCase struct {
 }
 
 func NewCurriculumUseCase(curriculumRepo repositories.CurriculumRepo) usecases.CurriculumUC {
-	return CurriculumUseCase{
+	return &CurriculumUseCase{
 		CurriculumRepo: curriculumRepo,
 	}
 }

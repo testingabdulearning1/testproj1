@@ -1,9 +1,9 @@
 package di
 
 import (
-	usecases "school-management-app/src/learning/internal/usecases/curriculum"
 	handlers "school-management-app/src/learning/internal/handlers/curriculum"
 	"school-management-app/src/learning/internal/repositories"
+	usecases "school-management-app/src/learning/internal/usecases/curriculum"
 
 	"gorm.io/gorm"
 )
