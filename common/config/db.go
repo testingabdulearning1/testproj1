@@ -19,7 +19,8 @@ type Postgresdb struct {
 	DbName       string `mapstructure:"DB_NAME"`
 }
 
-// ConnectToDB connects to the database and returns the connection. If the database does not exist, it creates it and returns the connection.
+// ConnectToDB connects to the database and returns the connection.
+// If the database does not exist, it creates it and returns the connection.
 func ConnectToDB(dbConfig Postgresdb) (*gorm.DB, error) {
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=UTC",
 		dbConfig.DbHost,
@@ -72,7 +73,7 @@ func ConnectToDB(dbConfig Postgresdb) (*gorm.DB, error) {
 	return db, nil
 }
 
-// ConnectAndGetDB connects to the already existing database and returns the connection. 
+// ConnectAndGetDB connects to the already existing database and returns the connection.
 // If the database does not exist, it returns an error.
 func ConnectAndGetDB(dbConfig Postgresdb) (*gorm.DB, error) {
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=UTC",
@@ -85,7 +86,8 @@ func ConnectAndGetDB(dbConfig Postgresdb) (*gorm.DB, error) {
 	return gorm.Open(postgres.Open(dsn), &gorm.Config{})
 }
 
-// CreateNewDB creates a new database and returns the connection. Returns an error if the database already exists.
+// CreateNewDB creates a new database and returns the connection.
+// Returns an error if the database already exists.
 func CreateNewDB(dbConfig Postgresdb) (*gorm.DB, error) {
 	var err error
 

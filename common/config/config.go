@@ -2,42 +2,39 @@ package config
 
 import (
 	"log"
-	"os"
 
 	"github.com/spf13/viper"
 )
 
-var (
-	PORT        = "3000"
-	ENVIRONMENT = ""
-	SERVER_TYPE = ""
-)
-
-type Config struct {
-	DB string
+func init() {
+	loadConfig()
+	setPublicDB()
 }
 
-type DB struct {
-	Host     string `mapstructure:"DB_HOST"`
-	Port     string `mapstructure:"DB_PORT"`
-	User     string `mapstructure:"DB_USER"`
-	Password string `mapstructure:"DB_PASSWORD"`
-	Name     string `mapstructure:"DB_NAME"`
+var Env struct {
+	Port string `mapstructure:"PORT"`
 }
 
-func LoadConfig() {
-	PORT = viper.GetString("PORT")
-	ENVIRONMENT = viper.GetString("ENVIRONMENT")
-	SERVER_TYPE = viper.GetString("SERVER_TYPE")
+func loadConfig() {
+	viper.SetConfigName("common")
+	viper.AddConfigPath("./config")
+	viper.SetConfigType("env")
+	viper.AutomaticEnv()
 
-	log.Println("Config loading is success")
-}
+	err := viper.ReadInConfig()
+	if err != nil {
+		log.Fatalln("error occured while reading env variables, error:", err)
+	}
 
-var AccountSvc struct {
-	HttpPort string `mapstructure:"ACCOUNTS_PORT"`
-	DB `mapstructure:",squash"`
-}
+	err = viper.Unmarshal(&Env)
+	if err != nil {
+		log.Fatalln("error occured while writing env values onto variables, error:", err)
+	}
 
-func InitAccountConfig() {
-	AccountSvc.Port = os.Getenv("ACCOUNTS_PORT")
+	err = viper.Unmarshal(&PostgresConnection)
+	if err != nil {
+		log.Fatalln("error occured while writing env values onto variables, error:", err)
+	}
+
+	PostgresPublicDbName = viper.GetString("PUBLIC_DB_NAME")
 }

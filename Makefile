@@ -13,3 +13,6 @@ exam:
 
 learning:
 	go run src/learning/cmd/main.go
+
+running:
+	CompileDaemon -build="go build -o ./common/cmd/main ./common/cmd" -command=./common/cmd/main
