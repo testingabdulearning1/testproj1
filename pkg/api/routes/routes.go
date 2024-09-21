@@ -10,7 +10,7 @@ import (
 func MountRoutes(app *fiber.App) {
 	handlers := di.GetHandlers(db.PublicDB)
 	saGroup := app.Group("/superadmin")
-	saGroup.Get("/signin",handlers.Handler.SuperAdminSignin)
+	saGroup.Post("/login",handlers.Handler.SuperAdminSignin)
 
 
 }
