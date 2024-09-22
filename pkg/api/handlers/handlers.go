@@ -2,8 +2,8 @@ package handlers
 
 import (
 	"school-management-app/pkg/domain/request"
-	usecases "school-management-app/pkg/usecase/interface"
 	"school-management-app/pkg/utils/validation"
+	usecases "school-management-app/pkg/usecase/interface"
 
 	"github.com/gofiber/fiber/v2"
 )
