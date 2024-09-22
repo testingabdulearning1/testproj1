@@ -6,5 +6,5 @@ import (
 )
 
 type Repository interface {
-	GetSuperAdminPassword(ctx context.Context, username string) (*models.Admin,bool, error)
+	GetSuperAdminPassword(ctx context.Context, username string) (*models.SuperAdmin,bool, error)
 }

@@ -49,7 +49,7 @@ func (u Usecase) SuperAdminSignin(ctx context.Context, req *request.SuperAdminSi
 		Status:         true,
 		ResponseCode:   respcode.Success,
 		Data: map[string]interface{}{
-			"name":  admin.Name,
+			"username":  admin.Username,
 			"token": token,
 		},
 	}

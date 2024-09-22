@@ -1,8 +1,6 @@
 package response
 
 import (
-	"fmt"
-
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -16,12 +14,12 @@ type custError struct {
 }
 
 func (resp Response) WriteToJSON(c *fiber.Ctx) error {
+	if resp.Error == nil {
+		return c.Status(resp.HttpStatusCode).JSON(resp)
+	}
 	newCustError := custError{
 		Response: resp,
+		Error:    resp.Error.Error(),
 	}
-	if resp.Error != nil {
-		newCustError.Error = resp.Error.Error()
-	}
-	fmt.Println("newCustError", newCustError)
 	return c.Status(resp.HttpStatusCode).JSON(newCustError)
 }
