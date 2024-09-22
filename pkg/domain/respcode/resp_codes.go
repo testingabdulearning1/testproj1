@@ -10,9 +10,12 @@ const (
 	Forbidden           = "FORBIDDEN"
 	Created             = "CREATED"
 	NotMentioned        = "NOT_MENTIONED"
+)
 
-	InvalidUsername = "INVALID_USERNAME"
-	InvalidPassword = "INVALID_PASSWORD"
+// Authentication(middleware) related response codes
+const (
+	TokenExpired = "TOKEN_EXPIRED"
+	InvalidToken = "INVALID_TOKEN"
 )
 
 //@Team: Please add more response codes here (if needed) and update the documentation accordingly.

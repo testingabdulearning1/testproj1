@@ -12,6 +12,7 @@ func init() {
 
 var Env struct {
 	Port string `mapstructure:"PORT"`
+	JwtSecretKey string `mapstructure:"JWT_SECRET_KEY"`
 }
 
 var PostgresConn struct {

@@ -1,7 +1,10 @@
 package interfaces
 
-import "context"
+import (
+	"context"
+	"school-management-app/pkg/domain/models"
+)
 
 type Repository interface {
-	GetSuperAdminPassword(ctx context.Context, username string) (bool,string, error)
+	GetSuperAdminPassword(ctx context.Context, username string) (*models.Admin,bool, error)
 }

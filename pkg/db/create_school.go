@@ -1,14 +1,14 @@
 package db
 
-import (
-	"gorm.io/gorm"
-)
+// import (
+// 	"gorm.io/gorm"
+// )
 
-const (
-	DbSuffix = "_accounts"
-)
+// const (
+// 	DbSuffix = ""
+// )
 
-var SchoolDBs map[string]*gorm.DB = make(map[string]*gorm.DB)
+// var SchoolDBs map[string]*gorm.DB = make(map[string]*gorm.DB)
 
 // func GetSchoolDB(schoolPrefix string) (*gorm.DB, error) {
 // 	if db, ok := SchoolDBs[schoolPrefix]; ok {
