@@ -1,0 +1,31 @@
+# Ignore Go build artifacts
+*.out
+*.exe
+*.log
+
+cmd/main
+
+# Ignore local environment configuration
+.env.example
+.env
+secrets/
+
+# Ignore any potential editor or IDE files
+.vscode/
+
+
+# Ignore git-related files
+.git/
+.gitignore
+
+# Ignore OS-specific files
+.DS_Store
+
+# Ignore your documentation and notes, not needed in the Docker image
+README.md
+notes
+
+# Ignore the Dockerfile and Makefile if they are not needed in the image
+docker-compose.yml
+dockerfile
+Makefile
