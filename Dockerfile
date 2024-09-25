@@ -1,11 +1,14 @@
 # Stage 1: Build the Go binary
-FROM golang:1.20-alpine AS builder
+FROM golang:1.22-alpine3.19 AS builder
 
 # Set the working directory inside the container
 WORKDIR /app
 
 # Copy go.mod and go.sum to download dependencies
 COPY go.mod go.sum ./
+
+# Add this step before RUN go mod download
+RUN apk add --no-cache curl && curl -I https://proxy.golang.org
 
 # Download all the dependencies
 RUN go mod download
