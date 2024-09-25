@@ -17,7 +17,7 @@ RUN go mod download
 COPY . .
 
 # Build the application
-RUN go build -o main .
+RUN go build -o /app/main .
 
 # Command to run the executable
 CMD ["./main"]
