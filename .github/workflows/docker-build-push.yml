@@ -27,3 +27,6 @@ jobs:
         context: .
         push: true
         tags: ${{ secrets.DOCKERHUB_USERNAME }}/hello-app:latest
+        # Add this line to create go.sum if it doesn't exist
+        build-args: |
+          DOCKER_BUILDKIT=1
