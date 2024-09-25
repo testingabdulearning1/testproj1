@@ -1,0 +1,53 @@
+name: Docker Build and Push to GHCR
+
+on:
+  push:
+    branches:
+      - testdocker
+  pull_request:
+    branches: [ "testdocker" ]
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v1
+
+    - name: Log in to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Extract metadata (tags, labels) for Docker
+      id: meta
+      uses: docker/metadata-action@v3
+      with:
+        images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v2
+      id: docker_build
+      with:
+        context: .
+        push: true
+        tags: |
+          ${{ steps.meta.outputs.tags }}
+          ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+        labels: ${{ steps.meta.outputs.labels }}
+
+    - name: Image digest
+      run: echo ${{ steps.docker_build.outputs.digest }}
