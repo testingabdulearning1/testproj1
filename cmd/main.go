@@ -1,16 +1,21 @@
 package main
 
 import (
-	"fmt"
-	"time"
-
-	"github.com/google/uuid"
+	"github.com/gofiber/fiber/v2"
+	"log"
 )
 
 func main() {
-	for {
-		id := uuid.New()
-		fmt.Println("hello", id)
-		time.Sleep(3 * time.Second)
+	// Initialize Fiber app
+	app := fiber.New()
+
+	// Define a basic route
+	app.Get("/", func(c *fiber.Ctx) error {
+		return c.SendString("Hello, Fiber!")
+	})
+
+	// Start the server
+	if err := app.Listen(":3000"); err != nil {
+		log.Fatalf("Error starting server: %v", err)
 	}
 }
