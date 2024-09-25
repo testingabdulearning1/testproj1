@@ -3,11 +3,14 @@ package main
 import (
 	"fmt"
 	"time"
+
+	"github.com/google/uuid"
 )
 
 func main() {
 	for {
-		fmt.Println("hello")
+		id := uuid.New()
+		fmt.Println("hello", id)
 		time.Sleep(3 * time.Second)
 	}
 }
