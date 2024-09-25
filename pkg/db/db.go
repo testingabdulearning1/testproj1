@@ -10,9 +10,9 @@ import (
 	"gorm.io/gorm"
 )
 
-const (
-	superAdminUsername = "superadmin"
-	superAdminPassword = "adminpwsuper"
+var (
+	superAdminUsername = config.InitialData.SuperAdminUsername
+	superAdminPassword = config.InitialData.SuperAdminPassword
 )
 
 var PublicDB *gorm.DB = initPublicDB()
@@ -46,6 +46,12 @@ func initiateSuperAdmin(db *gorm.DB) {
 	err := db.First(&superAdmin).Error
 	if err != nil {
 		if err == gorm.ErrRecordNotFound {
+			fmt.Println("Super admin doesn't exist. Creating super admin...")
+
+			//check if super admin username and password are provided
+			if superAdminUsername == "" || superAdminPassword == "" {
+				log.Fatal("Super admin username and password are required (for initial setup). But, either of them or both are not provided in environment.")
+			}
 			encryptedPasswordByte, err := bcrypt.GenerateFromPassword([]byte(superAdminPassword), bcrypt.DefaultCost)
 			if err != nil {
 				log.Fatal("Couldn't encrypt super admin password. Error:", err)
@@ -53,7 +59,7 @@ func initiateSuperAdmin(db *gorm.DB) {
 
 			//create super admin
 			superAdmin = models.SuperAdmin{
-				Username: superAdminUsername,
+				Username:       superAdminUsername,
 				HashedPassword: string(encryptedPasswordByte),
 			}
 			err = db.Create(&superAdmin).Error
@@ -64,7 +70,7 @@ func initiateSuperAdmin(db *gorm.DB) {
 		} else {
 			log.Fatal("Couldn't get super admin. Error:", err)
 		}
-	}else {
+	} else {
 		fmt.Println("Super admin already exists")
 	}
 }

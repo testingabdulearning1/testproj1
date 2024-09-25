@@ -39,13 +39,13 @@ func ConnectToDB() (*gorm.DB, error) {
 	var exists bool
 	checkDBQuery := fmt.Sprintf("SELECT EXISTS(SELECT 1 FROM pg_database WHERE datname = '%s')", PostgresConn.DbName)
 	if err := serverDB.Raw(checkDBQuery).Scan(&exists).Error; err != nil {
-		log.Println("Couldn't check if database exists. Error:", err)
+		log.Printf("Couldn't check if database (named %s) exists. Error:%v\n",PostgresConn.DbName, err)
+		log.Println("More info: checkDBQuery:", checkDBQuery)
 		return nil, err
 	}
 
 	// If the database does not exist, create it
 	if !exists {
-		fmt.Println("P:",PostgresConn.DbName)
 		createDBQuery := fmt.Sprintf("CREATE DATABASE %s", PostgresConn.DbName)
 		if err := serverDB.Exec(createDBQuery).Error; err != nil {
 			log.Println("Couldn't create database. Error:", err)
@@ -58,6 +58,7 @@ func ConnectToDB() (*gorm.DB, error) {
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Println("Couldn't connect to DB. Error:", err)
+		log.Println("More info: dsn:", dsn)
 		return nil, err
 	}
 	return db, nil

@@ -1,6 +1,7 @@
 package config
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/spf13/viper"
@@ -11,8 +12,13 @@ func init() {
 }
 
 var Env struct {
-	Port string `mapstructure:"PORT"`
+	Port         string `mapstructure:"PORT"`
 	JwtSecretKey string `mapstructure:"JWT_SECRET_KEY"`
+}
+
+var InitialData struct {
+	SuperAdminUsername string //get it directly from env variables if provided (not from .env file)
+	SuperAdminPassword string //get it directly from env variables if provided (not from .env file)
 }
 
 var PostgresConn struct {
@@ -24,31 +30,41 @@ var PostgresConn struct {
 }
 
 func loadConfig() {
-	// Specify the name of the config file (without the extension)
-	viper.SetConfigName(".env") // Look for a file named '.env'
-	
-	// Specify the path where viper should look for the config file
-	viper.AddConfigPath(".")    // Look in the current directory
-	
-	// Set the file type for Viper to expect
-	viper.SetConfigType("env")  // Set the config file type to ".env"
-	
-	// Automatically override any variable from the env if it exists
 	viper.AutomaticEnv()
 
-	err := viper.ReadInConfig()
-	if err != nil {
-		log.Fatalln("error occured while reading env variables, error:", err)
+	if viper.GetString("DOCKER_ENV") != "true" {
+
+		viper.SetConfigName(".env")
+		viper.AddConfigPath(".")
+		viper.SetConfigType("env")
+		err := viper.ReadInConfig()
+		if err != nil {
+			log.Fatalln("error occured while reading env variables, error:", err)
+		}
+
+		err = viper.Unmarshal(&Env)
+		if err != nil {
+			log.Fatalln("error occured while writing env values onto variables, error:", err)
+		}
+
+		err = viper.Unmarshal(&PostgresConn)
+		if err != nil {
+			log.Fatalln("error occured while writing env values onto variables, error:", err)
+		}
+	} else {
+		Env.Port = viper.GetString("PORT")
+		Env.JwtSecretKey = viper.GetString("JWT_SECRET_KEY")
+
+		PostgresConn.DbHost = viper.GetString("DB_HOST")
+		PostgresConn.DbUser = viper.GetString("DB_USER")
+		PostgresConn.DbPassword = viper.GetString("DB_PASSWORD")
+		PostgresConn.DbPort = viper.GetString("DB_PORT")
+		PostgresConn.DbName = viper.GetString("DB_NAME")
 	}
 
-	err = viper.Unmarshal(&Env)
-	if err != nil {
-		log.Fatalln("error occured while writing env values onto variables, error:", err)
-	}
+	//directly accessing the values from env variables
+	InitialData.SuperAdminUsername = viper.GetString("SUPER_ADMIN_USERNAME")
+	InitialData.SuperAdminPassword = viper.GetString("SUPER_ADMIN_PASSWORD")
 
-	err = viper.Unmarshal(&PostgresConn)
-	if err != nil {
-		log.Fatalln("error occured while writing env values onto variables, error:", err)
-	}
-
+	fmt.Println("Envirnment variables loaded successfully")
 }
