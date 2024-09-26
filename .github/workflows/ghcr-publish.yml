@@ -54,12 +54,7 @@ jobs:
           ${{ steps.meta_ghcr.outputs.tags }}
           ${{ env.GHCR_REGISTRY }}/${{ env.GHCR_IMAGE_NAME }}:latest
         labels: ${{ steps.meta_ghcr.outputs.labels }}
-    #   continue-on-error: true  # Continue even if this step fails
 
-    # - name: Image digest (GHCR)
-    #   if: always()  # This step will always run
-    #   run: |
-    #     echo "GHCR digest: ${{ steps.docker_build_ghcr.outputs.digest }}"
-    
-    - name: Image digest
-      run: echo ${{ steps.docker_build.outputs.digest }}
+    # Output the image digest for GHCR using environment files
+    - name: Image digest (GHCR)
+      run: echo "GHCR digest=${{ steps.docker_build_ghcr.outputs.digest }}" >> $GITHUB_ENV
