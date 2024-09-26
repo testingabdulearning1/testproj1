@@ -16,6 +16,6 @@ func main() {
 
 	// Start the server
 	if err := app.Listen(":3000"); err != nil {
-		log.Fatalf("Error starting server: %v", err)
+		log.Fatalf("Error starting sderver: %v", err)
 	}
 }
