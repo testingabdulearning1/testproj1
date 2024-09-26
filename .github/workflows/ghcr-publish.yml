@@ -3,9 +3,9 @@ name: Docker Build and Push to GHCR and DockerHub
 on:
   push:
     branches:
-      - beta
+      - main
   pull_request:
-    branches: [ "beta" ]
+    branches: [ "main" ]
 
 env:
   # github container registry related
