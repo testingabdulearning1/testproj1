@@ -10,8 +10,9 @@ on:
 env:
   # github container registry related
   GHCR_REGISTRY: ghcr.io
-  GHCR_IMAGE_NAME: infuzio-backend
-  G_HUB_TOKEN: ${{ secrets.GHUB_TOKEN }}
+  GHCR_IMAGE_NAME: ${{ github.repository }}
+  # Remove this line as we'll use GITHUB_TOKEN instead
+  # G_HUB_TOKEN: ${{ secrets.GHUB_TOKEN }}
   
 
 jobs:
@@ -34,7 +35,7 @@ jobs:
       with:
         registry: ${{ env.GHCR_REGISTRY }}
         username: ${{ github.actor }}
-        password: ${{ secrets.G_HUB_TOKEN }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
     # Extract metadata for GHCR
     - name: Extract metadata for GHCR
